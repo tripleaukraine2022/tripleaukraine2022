@@ -1,0 +1,3 @@
+map_name: ukraine
+games:
+- {game_name: Ukraine, file_name: ukraine.xml}
