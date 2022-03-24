@@ -17,7 +17,7 @@
     <territory name="Bryansk"/> 
     <territory name="Kursk"/> 
     <territory name="Crimea"/> 
-    <!-- Ukraine -->
+    <!-- Ukrainians -->
     <territory name="Poltava"/> 
     <territory name="Rivne"/> 
     <territory name="Luhansk"/> 
@@ -325,11 +325,11 @@
   <playerList>
     <!-- In turn order -->
     <player name="Russians" optional="false" canBeDisabled="false"/>
-    <player name="Ukraine" optional="false" canBeDisabled="false"/>
+    <player name="Ukrainians" optional="false" canBeDisabled="false"/>
     <!-- Axis Alliances -->
     <alliance player="Russians" alliance="Axis"/>
     <!-- Allies Alliances -->
-    <alliance player="Ukraine" alliance="Allies"/>
+    <alliance player="Ukrainians" alliance="Allies"/>
   </playerList>
   <unitList>
     <unit name="infantry"/>
@@ -363,8 +363,8 @@
       <!-- Bidding Phase -->
       <step name="russianBid" delegate="bid" player="Russians" maxRunCount="1"/>
       <step name="russianBidPlace" delegate="placeBid" player="Russians" maxRunCount="1"/>
-      <step name="ukraineBid" delegate="bid" player="Ukraine" maxRunCount="1"/>
-      <step name="ukraineBidPlace" delegate="placeBid" player="Ukraine" maxRunCount="1"/>
+      <step name="ukraineBid" delegate="bid" player="Ukrainians" maxRunCount="1"/>
+      <step name="ukraineBidPlace" delegate="placeBid" player="Ukrainians" maxRunCount="1"/>
       <!-- Russians Game Sequence -->
       <step name="russianPurchase" delegate="purchase" player="Russians"/>
       <step name="russianPolitics" delegate="politics" player="Russians"/>
@@ -373,14 +373,14 @@
       <step name="russianNonCombatMove" delegate="move" player="Russians" display="Non Combat Move"/>
       <step name="russianPlace" delegate="place" player="Russians"/>
       <step name="russianEndTurn" delegate="endTurn" player="Russians"/>
-      <!-- Ukraine Game Sequence -->
-      <step name="ukrainePurchase" delegate="purchase" player="Ukraine"/>
-      <step name="ukrainePolitics" delegate="politics" player="Ukraine"/>
-      <step name="ukraineCombatMove" delegate="move" player="Ukraine"/>
-      <step name="ukraineBattle" delegate="battle" player="Ukraine"/>
-      <step name="ukraineNonCombatMove" delegate="move" player="Ukraine" display="Non Combat Move"/>
-      <step name="ukrainePlace" delegate="place" player="Ukraine"/>
-      <step name="ukraineEndTurn" delegate="endTurn" player="Ukraine"/>
+      <!-- Ukrainians Game Sequence -->
+      <step name="ukrainePurchase" delegate="purchase" player="Ukrainians"/>
+      <step name="ukrainePolitics" delegate="politics" player="Ukrainians"/>
+      <step name="ukraineCombatMove" delegate="move" player="Ukrainians"/>
+      <step name="ukraineBattle" delegate="battle" player="Ukrainians"/>
+      <step name="ukraineNonCombatMove" delegate="move" player="Ukrainians" display="Non Combat Move"/>
+      <step name="ukrainePlace" delegate="place" player="Ukrainians"/>
+      <step name="ukraineEndTurn" delegate="endTurn" player="Ukrainians"/>
     </sequence>
   </gamePlay>
   <production>
@@ -424,7 +424,7 @@
       <frontierRules name="buyArmour"/>
       <frontierRules name="buyFighter"/>
     </productionFrontier>
-    <playerProduction player="Ukraine" frontier="production"/>
+    <playerProduction player="Ukrainians" frontier="production"/>
     <playerProduction player="Russians" frontier="production"/>
   </production>
   <variableList>
@@ -442,6 +442,12 @@
       </variable>
   </variableList>
   <attachmentList>
+    
+      <!-- Ukraine gets an economic boost if it overcomes the separatists in the Donbass region -->
+    <attachment name="objectiveAttachmentUnitedUkraine" attachTo="Ukrainians" javaClass="games.strategy.triplea.attachments.RulesAttachment" type="player">
+      <option name="objectiveValue" value="5"/>
+      <option name="directOwnershipTerritories" value="Poltava:Rivne:Luhansk:Dnipropetrovsk:Chernihiv:Sumy:Ivano-Frankivsa:East Odesa:Ternopil:South Odesa:City of Kyiv:East Kyiv:City of Kherson:Chernivtsi:Vinnytsya:Kyiv:Kherson:City of Kharkiv:Uzhhorod:Kharkiv:City of Dnipro:Zhytomyr:Zaporizhia:Khmelnytskyl:Donetsk:Cherkasy:Volyn:Mykolayiv:East Cherkasy:East Dnipropetrovsk:Lviv:Kirovohrad:Norh Kherson" count="33"/>
+    </attachment>
       
       <!-- 
         Sanctions.  These will decrease popular support and resources available to Russia and will increasingly need Ukrainian victories
@@ -454,7 +460,7 @@
       <option name="conditions" value="conditionAttachmentSanctionsRound2"/>
       <option name="when" value="after:russianPurchase"/>
       <option name="territories" value="Russia"/>
-      <option name="territoryProperty" value="production" count="35"/>
+      <option name="territoryProperty" value="production" count="30"/>
     </attachment>
     
     <attachment name="conditionAttachmentSanctionsRound4" attachTo="Russians" javaClass="games.strategy.triplea.attachments.RulesAttachment" type="player">
@@ -474,7 +480,7 @@
       <option name="conditions" value="conditionAttachmentSanctionsRound6"/>
       <option name="when" value="after:russianPurchase"/>
       <option name="territories" value="Russia"/>
-      <option name="territoryProperty" value="production" count="15"/>
+      <option name="territoryProperty" value="production" count="20"/>
     </attachment>
     
     <attachment name="conditionAttachmentSanctionsRound8" attachTo="Russians" javaClass="games.strategy.triplea.attachments.RulesAttachment" type="player">
@@ -484,38 +490,52 @@
       <option name="conditions" value="conditionAttachmentSanctionsRound8"/>
       <option name="when" value="after:russianPurchase"/>
       <option name="territories" value="Russia"/>
-      <option name="territoryProperty" value="production" count="5"/>
+      <option name="territoryProperty" value="production" count="15"/>
     </attachment>
     
-    <!-- Ukrainian triggered victory. Ukraine wins if Kyiv has not been taken by round 10 -->
-    <attachment name="conditionAttachmentUkraineSurvives" attachTo="Ukraine" javaClass="games.strategy.triplea.attachments.RulesAttachment" type="player">
-      <option name="rounds" value="10-+"/>
+    <!-- Ukrainian triggered victory. Ukrainians wins if Kyiv has not been taken by round 10 -->
+    <attachment name="conditionAttachmentUkraineSurvives" attachTo="Ukrainians" javaClass="games.strategy.triplea.attachments.RulesAttachment" type="player">
+      <option name="rounds" value="10"/>
+      <option name="players" value="Ukrainians"/>
       <option name="directOwnershipTerritories" value="City of Kyiv"/>
     </attachment>
-    <attachment name="triggerAttachmentUkranianVictory" attachTo="Ukraine" javaClass="games.strategy.triplea.attachments.TriggerAttachment" type="player">
+    <attachment name="triggerAttachmentUkranianVictory" attachTo="Ukrainians" javaClass="games.strategy.triplea.attachments.TriggerAttachment" type="player">
       <option name="conditions" value="conditionAttachmentUkraineSurvives"/>
-      <option name="victory" value="ALLIED_VICTORY"/>
+      <option name="when" value="after:russianBattle"/>
+      <option name="victory" value="UKRAINE_VICTORY"/>
+      <option name="players" value="Ukrainians"/>
+    </attachment>
+    
+     <!-- Russian triggered victory. Russia wins if Kyiv falls -->
+    <attachment name="conditionAttachmentFallofKyiv" attachTo="Russians" javaClass="games.strategy.triplea.attachments.RulesAttachment" type="player">
+      <option name="directOwnershipTerritories" value="City of Kyiv"/>
+      <option name="players" value="Russians"/>
+    </attachment>
+    <attachment name="triggerAttachmentUkranianVictory" attachTo="Russians" javaClass="games.strategy.triplea.attachments.TriggerAttachment" type="player">
+      <option name="conditions" value="conditionAttachmentFallofKyiv"/>
+      <option name="when" value="after:russianBattle"/>
+      <option name="victory" value="RUSSIA_VICTORY"/>
       <option name="players" value="Russians"/>
     </attachment>
       
     <!-- Ukraine is fighting a defensive war and cannot enter any Russian territories -->
-    <attachment name="rulesAttachment" attachTo="Ukraine" javaClass="games.strategy.triplea.attachments.RulesAttachment" type="player">
+    <attachment name="rulesAttachment" attachTo="Ukrainians" javaClass="games.strategy.triplea.attachments.RulesAttachment" type="player">
       <option name="movementRestrictionTerritories" value="Belarus Brest:Belarus Gomel:Russia:Rostov:Belgorod:Voronezh:Krasnodar Krai:Bryansk:Kursk:Crimea"/>
       <option name="movementRestrictionType" value="disallowed"/>
     </attachment>
     
     <!-- Infantry in NATO supply zones get upgraded with Javelins and Stingers -->
-    <attachment foreach="$NatoSupplyTerritories$" name="conditionAttachmentInfantryReadyForUpgrade@NatoSupplyTerritories@" attachTo="Ukraine" javaClass="games.strategy.triplea.attachments.RulesAttachment" type="player">
-      <option name="players" value="Ukraine"/>
+    <attachment foreach="$NatoSupplyTerritories$" name="conditionAttachmentInfantryReadyForUpgrade@NatoSupplyTerritories@" attachTo="Ukrainians" javaClass="games.strategy.triplea.attachments.RulesAttachment" type="player">
+      <option name="players" value="Ukrainians"/>
       <option name="directOwnershipTerritories" value="@NatoSupplyTerritories@" count="1"/>
       <option name="unitPresence" value="infantry" count="1"/>
     </attachment>
-    <attachment foreach="$NatoSupplyTerritories$" name="triggerAttachmentUpgradeInfantryPlace@NatoSupplyTerritories@" attachTo="Ukraine" javaClass="games.strategy.triplea.attachments.TriggerAttachment" type="player">
+    <attachment foreach="$NatoSupplyTerritories$" name="triggerAttachmentUpgradeInfantryPlace@NatoSupplyTerritories@" attachTo="Ukrainians" javaClass="games.strategy.triplea.attachments.TriggerAttachment" type="player">
       <option name="conditions" value="conditionAttachmentInfantryReadyForUpgrade@NatoSupplyTerritories@"/>
       <option name="when" value="after:ukraineNonCombatMove"/>
       <option name="placement" value="@NatoSupplyTerritories@:upgradedInfantry" count="1"/>
     </attachment>
-    <attachment foreach="$NatoSupplyTerritories$" name="triggerAttachmentUpgradeInfantryRemove@NatoSupplyTerritories@" attachTo="Ukraine" javaClass="games.strategy.triplea.attachments.TriggerAttachment" type="player">
+    <attachment foreach="$NatoSupplyTerritories$" name="triggerAttachmentUpgradeInfantryRemove@NatoSupplyTerritories@" attachTo="Ukrainians" javaClass="games.strategy.triplea.attachments.TriggerAttachment" type="player">
       <option name="conditions" value="conditionAttachmentInfantryReadyForUpgrade@NatoSupplyTerritories@"/>
       <option name="when" value="after:ukraineNonCombatMove"/>
       <option name="removeUnits" value="@NatoSupplyTerritories@:infantry" count="1"/>
@@ -523,7 +543,7 @@
      
       
     <!-- This lets APCs be super transports -->
-    <attachment name="techAttachment" attachTo="Ukraine" javaClass="games.strategy.triplea.attachments.TechAttachment" type="player">
+    <attachment name="techAttachment" attachTo="Ukrainians" javaClass="games.strategy.triplea.attachments.TechAttachment" type="player">
       <option name="mechanizedInfantry" value="true"/>
     </attachment>
     <attachment name="techAttachment" attachTo="Russians" javaClass="games.strategy.triplea.attachments.TechAttachment" type="player">
@@ -604,6 +624,7 @@
     </attachment>
     <attachment name="unitAttachment" attachTo="factory" javaClass="games.strategy.triplea.attachments.UnitAttachment" type="unitType">
       <option name="isFactory" value="true"/>
+      <option name="destroyedWhenCapturedBy" value="BY:Russians"/>
     </attachment>
     
     <attachment name="unitAttachment" attachTo="bunker" javaClass="games.strategy.triplea.attachments.UnitAttachment" type="unitType">
@@ -627,7 +648,7 @@
       <option name="number" value="100"/>
       <option name="bonusType" value="BunkeredInfantryStackBonus" count="1"/>
       <option name="impArtTech" value="false"/>
-      <option name="players" value="Ukraine"/>
+      <option name="players" value="Ukrainians"/>
     </attachment>
     
     <attachment name="territoryAttachment" attachTo="Hungary" javaClass="games.strategy.triplea.attachments.TerritoryAttachment" type="territory">
@@ -692,7 +713,7 @@
         <option name="production" value="1"/>
     </attachment>
     <attachment name="territoryAttachment" attachTo="Russia" javaClass="games.strategy.triplea.attachments.TerritoryAttachment" type="territory">
-        <option name="production" value="45"/>
+        <option name="production" value="35"/>
         <option name="capital" value="Russians"/>
     </attachment>
     <attachment name="territoryAttachment" attachTo="Ternopil" javaClass="games.strategy.triplea.attachments.TerritoryAttachment" type="territory">
@@ -703,7 +724,7 @@
     </attachment>
     <attachment name="territoryAttachment" attachTo="City of Kyiv" javaClass="games.strategy.triplea.attachments.TerritoryAttachment" type="territory">
         <option name="production" value="6"/>
-        <option name="capital" value="Ukraine"/>
+        <option name="capital" value="Ukrainians"/>
     </attachment>
     <attachment name="territoryAttachment" attachTo="East Kyiv" javaClass="games.strategy.triplea.attachments.TerritoryAttachment" type="territory">
         <option name="production" value="1"/>
@@ -753,7 +774,7 @@
         <option name="production" value="0"/>
     </attachment>
     <attachment name="territoryAttachment" attachTo="Donetsk" javaClass="games.strategy.triplea.attachments.TerritoryAttachment" type="territory">
-        <option name="production" value="1"/>
+        <option name="production" value="0"/>
     </attachment>
     <attachment name="territoryAttachment" attachTo="Cherkasy" javaClass="games.strategy.triplea.attachments.TerritoryAttachment" type="territory">
         <option name="production" value="0"/>
@@ -778,7 +799,7 @@
         <option name="production" value="2"/>
     </attachment>
     <attachment name="territoryAttachment" attachTo="Kirovohrad" javaClass="games.strategy.triplea.attachments.TerritoryAttachment" type="territory">
-        <option name="production" value="0"/>
+        <option name="production" value="1"/>
     </attachment>
     <attachment name="territoryAttachment" attachTo="Norh Kherson" javaClass="games.strategy.triplea.attachments.TerritoryAttachment" type="territory">
         <option name="production" value="1"/>
@@ -786,40 +807,41 @@
   </attachmentList>
   <initialize>
     <ownerInitialize>
-        <!-- Ukraine -->
-        <territoryOwner territory="Poltava" owner="Ukraine"/> 
-        <territoryOwner territory="Rivne" owner="Ukraine"/> 
-        <territoryOwner territory="Luhansk" owner="Ukraine"/> 
-        <territoryOwner territory="Dnipropetrovsk" owner="Ukraine"/> 
-        <territoryOwner territory="Chernihiv" owner="Ukraine"/> 
-        <territoryOwner territory="Sumy" owner="Ukraine"/> 
-        <territoryOwner territory="Ivano-Frankivsa" owner="Ukraine"/> 
-        <territoryOwner territory="East Odesa" owner="Ukraine"/> 
-        <territoryOwner territory="Ternopil" owner="Ukraine"/> 
-        <territoryOwner territory="South Odesa" owner="Ukraine"/> 
-        <territoryOwner territory="City of Kyiv" owner="Ukraine"/> 
-        <territoryOwner territory="East Kyiv" owner="Ukraine"/> 
-        <territoryOwner territory="City of Kherson" owner="Ukraine"/> 
-        <territoryOwner territory="Chernivtsi" owner="Ukraine"/> 
-        <territoryOwner territory="Vinnytsya" owner="Ukraine"/> 
-        <territoryOwner territory="Kyiv" owner="Ukraine"/> 
-        <territoryOwner territory="Kherson" owner="Ukraine"/> 
-        <territoryOwner territory="City of Kharkiv" owner="Ukraine"/> 
-        <territoryOwner territory="Uzhhorod" owner="Ukraine"/> 
-        <territoryOwner territory="Kharkiv" owner="Ukraine"/> 
-        <territoryOwner territory="City of Dnipro" owner="Ukraine"/> 
-        <territoryOwner territory="Zhytomyr" owner="Ukraine"/> 
-        <territoryOwner territory="Zaporizhia" owner="Ukraine"/>
-        <territoryOwner territory="Khmelnytskyl" owner="Ukraine"/> 
-        <territoryOwner territory="Donetsk" owner="Ukraine"/> 
-        <territoryOwner territory="Cherkasy" owner="Ukraine"/> 
-        <territoryOwner territory="Volyn" owner="Ukraine"/> 
-        <territoryOwner territory="Mykolayiv" owner="Ukraine"/> 
-        <territoryOwner territory="East Cherkasy" owner="Ukraine"/> 
-        <territoryOwner territory="East Dnipropetrovsk" owner="Ukraine"/> 
-        <territoryOwner territory="Lviv" owner="Ukraine"/> 
-        <territoryOwner territory="Kirovohrad" owner="Ukraine"/> 
-        <territoryOwner territory="Norh Kherson" owner="Ukraine"/> 
+        <!-- Ukrainians -->
+        <territoryOwner territory="Poltava" owner="Ukrainians"/> 
+        <territoryOwner territory="Rivne" owner="Ukrainians"/> 
+        <territoryOwner territory="Dnipropetrovsk" owner="Ukrainians"/> 
+        <territoryOwner territory="Chernihiv" owner="Ukrainians"/> 
+        <territoryOwner territory="Sumy" owner="Ukrainians"/> 
+        <territoryOwner territory="Ivano-Frankivsa" owner="Ukrainians"/> 
+        <territoryOwner territory="East Odesa" owner="Ukrainians"/> 
+        <territoryOwner territory="Ternopil" owner="Ukrainians"/> 
+        <territoryOwner territory="South Odesa" owner="Ukrainians"/> 
+        <territoryOwner territory="City of Kyiv" owner="Ukrainians"/> 
+        <territoryOwner territory="East Kyiv" owner="Ukrainians"/> 
+        <territoryOwner territory="City of Kherson" owner="Ukrainians"/> 
+        <territoryOwner territory="Chernivtsi" owner="Ukrainians"/> 
+        <territoryOwner territory="Vinnytsya" owner="Ukrainians"/> 
+        <territoryOwner territory="Kyiv" owner="Ukrainians"/> 
+        <territoryOwner territory="Kherson" owner="Ukrainians"/> 
+        <territoryOwner territory="City of Kharkiv" owner="Ukrainians"/> 
+        <territoryOwner territory="Uzhhorod" owner="Ukrainians"/> 
+        <territoryOwner territory="Kharkiv" owner="Ukrainians"/> 
+        <territoryOwner territory="City of Dnipro" owner="Ukrainians"/> 
+        <territoryOwner territory="Zhytomyr" owner="Ukrainians"/> 
+        <territoryOwner territory="Zaporizhia" owner="Ukrainians"/>
+        <territoryOwner territory="Khmelnytskyl" owner="Ukrainians"/> 
+        <territoryOwner territory="Cherkasy" owner="Ukrainians"/> 
+        <territoryOwner territory="Volyn" owner="Ukrainians"/> 
+        <territoryOwner territory="Mykolayiv" owner="Ukrainians"/> 
+        <territoryOwner territory="East Cherkasy" owner="Ukrainians"/> 
+        <territoryOwner territory="East Dnipropetrovsk" owner="Ukrainians"/> 
+        <territoryOwner territory="Lviv" owner="Ukrainians"/> 
+        <territoryOwner territory="Kirovohrad" owner="Ukrainians"/> 
+        <territoryOwner territory="Norh Kherson" owner="Ukrainians"/> 
+        <!-- Donbass separatists (Russia) -->
+        <territoryOwner territory="Donetsk" owner="Russians"/> 
+        <territoryOwner territory="Luhansk" owner="Russians"/> 
         <!-- Russia -->
         <territoryOwner territory="Russia" owner="Russians"/> 
         <territoryOwner territory="Belarus Brest" owner="Russians"/> 
@@ -870,92 +892,94 @@
       <unitPlacement unitType="artillery" territory="Bryansk" quantity="1" owner="Russians"/>
       <unitPlacement unitType="armour" territory="Bryansk" quantity="1" owner="Russians"/>
       <unitPlacement unitType="fighter" territory="Bryansk" quantity="1" owner="Russians"/>
-      <!-- Ukraine placements -->
-      <unitPlacement unitType="factory" territory="City of Kyiv" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="bunker" territory="City of Kyiv" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="infantry" territory="City of Kyiv" quantity="4" owner="Ukraine"/>
-      <unitPlacement unitType="artillery" territory="City of Kyiv" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="armour" territory="City of Kyiv" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="fighter" territory="City of Kyiv" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="apc" territory="City of Kyiv" quantity="1" owner="Ukraine"/>
+      <!-- Donbass placements -->
+      <unitPlacement unitType="infantry" territory="Luhansk" quantity="1" owner="Russians"/>
+      <unitPlacement unitType="artillery" territory="Luhansk" quantity="1" owner="Russians"/>
       
-      <unitPlacement unitType="factory" territory="City of Dnipro" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="bunker" territory="City of Dnipro" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="infantry" territory="City of Dnipro" quantity="3" owner="Ukraine"/>
-      <unitPlacement unitType="fighter" territory="City of Dnipro" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="apc" territory="City of Dnipro" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="infantry" territory="Donetsk" quantity="1" owner="Russians"/>
+      <unitPlacement unitType="artillery" territory="Donetsk" quantity="1" owner="Russians"/>    
+      <!-- Ukrainians placements -->
+      <unitPlacement unitType="factory" territory="City of Kyiv" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="bunker" territory="City of Kyiv" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="infantry" territory="City of Kyiv" quantity="4" owner="Ukrainians"/>
+      <unitPlacement unitType="artillery" territory="City of Kyiv" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="armour" territory="City of Kyiv" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="fighter" territory="City of Kyiv" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="apc" territory="City of Kyiv" quantity="1" owner="Ukrainians"/>
       
-      <unitPlacement unitType="factory" territory="City of Kharkiv" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="bunker" territory="City of Kharkiv" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="infantry" territory="City of Kharkiv" quantity="3" owner="Ukraine"/>
-      <unitPlacement unitType="artillery" territory="City of Kharkiv" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="armour" territory="City of Kharkiv" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="fighter" territory="City of Kharkiv" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="apc" territory="City of Kharkiv" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="factory" territory="City of Dnipro" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="bunker" territory="City of Dnipro" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="infantry" territory="City of Dnipro" quantity="3" owner="Ukrainians"/>
+      <unitPlacement unitType="fighter" territory="City of Dnipro" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="apc" territory="City of Dnipro" quantity="1" owner="Ukrainians"/>
       
-      <unitPlacement unitType="factory" territory="City of Kherson" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="bunker" territory="City of Kherson" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="infantry" territory="City of Kherson" quantity="3" owner="Ukraine"/>
-      <unitPlacement unitType="artillery" territory="City of Kherson" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="armour" territory="City of Kherson" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="fighter" territory="City of Kherson" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="apc" territory="City of Kherson" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="factory" territory="City of Kharkiv" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="bunker" territory="City of Kharkiv" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="infantry" territory="City of Kharkiv" quantity="3" owner="Ukrainians"/>
+      <unitPlacement unitType="artillery" territory="City of Kharkiv" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="armour" territory="City of Kharkiv" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="fighter" territory="City of Kharkiv" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="apc" territory="City of Kharkiv" quantity="1" owner="Ukrainians"/>
       
-      <unitPlacement unitType="factory" territory="Lviv" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="infantry" territory="Lviv" quantity="2" owner="Ukraine"/>
-      <unitPlacement unitType="fighter" territory="Lviv" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="apc" territory="Lviv" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="factory" territory="City of Kherson" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="bunker" territory="City of Kherson" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="infantry" territory="City of Kherson" quantity="3" owner="Ukrainians"/>
+      <unitPlacement unitType="artillery" territory="City of Kherson" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="armour" territory="City of Kherson" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="fighter" territory="City of Kherson" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="apc" territory="City of Kherson" quantity="1" owner="Ukrainians"/>
       
-      <unitPlacement unitType="infantry" territory="Volyn" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="infantry" territory="Rivne" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="infantry" territory="Zhytomyr" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="infantry" territory="Sumy" quantity="2" owner="Ukraine"/>
-      <unitPlacement unitType="infantry" territory="Kharkiv" quantity="2" owner="Ukraine"/>
+      <unitPlacement unitType="factory" territory="Lviv" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="infantry" territory="Lviv" quantity="2" owner="Ukrainians"/>
+      <unitPlacement unitType="fighter" territory="Lviv" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="apc" territory="Lviv" quantity="1" owner="Ukrainians"/>
       
-      <unitPlacement unitType="infantry" territory="Luhansk" quantity="2" owner="Ukraine"/>
-      <unitPlacement unitType="artillery" territory="Luhansk" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="infantry" territory="Volyn" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="infantry" territory="Rivne" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="infantry" territory="Zhytomyr" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="infantry" territory="Sumy" quantity="2" owner="Ukrainians"/>
+      <unitPlacement unitType="infantry" territory="Kharkiv" quantity="2" owner="Ukrainians"/>
       
-      <unitPlacement unitType="infantry" territory="Donetsk" quantity="2" owner="Ukraine"/>
-      <unitPlacement unitType="artillery" territory="Donetsk" quantity="1" owner="Ukraine"/>     
+      <unitPlacement unitType="infantry" territory="Kherson" quantity="1" owner="Ukrainians"/>
       
-      <unitPlacement unitType="infantry" territory="Kherson" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="factory" territory="South Odesa" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="infantry" territory="South Odesa" quantity="2" owner="Ukrainians"/>
+      <unitPlacement unitType="artillery" territory="South Odesa" quantity="1" owner="Ukrainians"/>
+      <unitPlacement unitType="apc" territory="South Odesa" quantity="1" owner="Ukrainians"/>
       
-      <unitPlacement unitType="factory" territory="South Odesa" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="infantry" territory="South Odesa" quantity="2" owner="Ukraine"/>
-      <unitPlacement unitType="artillery" territory="South Odesa" quantity="1" owner="Ukraine"/>
-      <unitPlacement unitType="apc" territory="South Odesa" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="infantry" territory="Ternopil" quantity="1" owner="Ukrainians"/>
       
-      <unitPlacement unitType="infantry" territory="Ternopil" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="infantry" territory="Vinnytsya" quantity="1" owner="Ukrainians"/>
       
-      <unitPlacement unitType="infantry" territory="Vinnytsya" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="infantry" territory="East Odesa" quantity="2" owner="Ukrainians"/>
       
-      <unitPlacement unitType="infantry" territory="East Odesa" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="infantry" territory="East Dnipropetrovsk" quantity="3" owner="Ukrainians"/>
       
-      <unitPlacement unitType="infantry" territory="East Dnipropetrovsk" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="infantry" territory="Poltava" quantity="1" owner="Ukrainians"/>
       
-      <unitPlacement unitType="infantry" territory="Poltava" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="infantry" territory="East Kyiv" quantity="1" owner="Ukrainians"/>
       
-      <unitPlacement unitType="infantry" territory="East Kyiv" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="infantry" territory="Kyiv" quantity="2" owner="Ukrainians"/>
       
-      <unitPlacement unitType="infantry" territory="Kyiv" quantity="2" owner="Ukraine"/>
+      <unitPlacement unitType="infantry" territory="Dnipropetrovsk" quantity="1" owner="Ukrainians"/>
       
-      <unitPlacement unitType="infantry" territory="Dnipropetrovsk" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="infantry" territory="Kirovohrad" quantity="1" owner="Ukrainians"/>
       
-      <unitPlacement unitType="infantry" territory="Kirovohrad" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="infantry" territory="Mykolayiv" quantity="2" owner="Ukrainians"/>
       
-      <unitPlacement unitType="infantry" territory="Mykolayiv" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="infantry" territory="Zaporizhia" quantity="3" owner="Ukrainians"/>
       
-      <unitPlacement unitType="infantry" territory="Zaporizhia" quantity="1" owner="Ukraine"/>
+      <unitPlacement unitType="infantry" territory="Chernihiv" quantity="2" owner="Ukrainians"/>
       
-      <unitPlacement unitType="infantry" territory="Chernihiv" quantity="2" owner="Ukraine"/>
+      <unitPlacement unitType="infantry" territory="Uzhhorod" quantity="2" owner="Ukrainians"/>
       
     </unitInitialize>
     <resourceInitialize>
-      <resourceGiven player="Russians" resource="PUs" quantity="45"/>
-      <resourceGiven player="Ukraine" resource="PUs" quantity="30"/>
+      <resourceGiven player="Russians" resource="PUs" quantity="35"/>
+      <resourceGiven player="Ukrainians" resource="PUs" quantity="30"/>
     </resourceInitialize>
     <relationshipInitialize>
-        <relationship type="War" player1="Russians" player2="Ukraine" roundValue="1"/>
+        <relationship type="War" player1="Russians" player2="Ukrainians" roundValue="1"/>
     </relationshipInitialize>
   </initialize>
   <propertyList>
@@ -963,7 +987,7 @@
     <property name="Russians bid" value="0" editable="true">
       <number min="0" max="1000"/>
     </property>
-    <property name="Ukraine bid" value="0" editable="true">
+    <property name="Ukrainians bid" value="0" editable="true">
       <number min="0" max="1000"/>
     </property>
     <!-- Victory Conditions -->
@@ -1096,11 +1120,11 @@
       <boolean/>
     </property>
     <!-- Map Name: also used for map utils when asked -->
-    <property name="mapName" value="ukraine" editable="false"/>
+    <property name="mapName" value="ukraine_2022" editable="false"/>
     <property name="notes">
       <value><![CDATA[
 <br>
-On February 24, 2022, Russia began a military invasion of Ukraine.
+On February 24, 2022, Russia began a military invasion of Ukrainians.
 <br><br>
 <h2>Game units</h2>
 <br>Infantry : Attack at 1 and defend at 2.
@@ -1111,7 +1135,7 @@ attack at a 2 and defend at a 3, and shoot at aircraft on a 2 when attacking and
 <br>Artillery : Attack at and defend at 2, and can support attacking infantry and upgraded infantry.
 <br>Fighter : Attacks at 3 and defends at 4.  Fighters can also bomb factories.
 <br>Bunker : Increase the defense of ground units by 2.
-<br>Russia wins if it can take Kyiv.  Ukraine wins if Kyiv still survives in 10 rounds. (TODO)
+<br>Russia wins if it can take Kyiv.  Ukrainians wins if Kyiv still survives in 10 rounds. (TODO)
 <br>Sanctions begin crippling Russia's economy and reduce Russia's income every few rounds.
 <br>
 		        	]]></value>
